@@ -1,0 +1,125 @@
+$def with (form, text)
+
+<!doctype html>
+
+<html>
+
+    <head>
+        <title>T3</title>
+        
+        <!-- JQuery Files-->
+        <link type="text/css"href="static/widgets/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
+        <script type="text/javascript" src="static/widgets/scripts/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxbuttons.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxradiobutton.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxtextarea.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxlistbox.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxdropdownlist.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxcalendar.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxloader.js"></script>       
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxnumberinput.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxdatetimeinput.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/globalization/globalize.js"></script>
+
+        <!-- Google Charts   -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <!-- Local Functions   -->
+        <script type="text/javascript" src="/static/methods.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/style.css" />
+
+    </head>
+ 
+    <body>
+        <h1>T3</h1>
+        <br>
+        <div id="start">Start</div>
+        <div id="A_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores demograficos:</h3></td>
+                    <td><div id='A_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="B_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores socioeconomicos:</h3></td>
+                    <td><div id='B_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="C_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores de mortalidade:</h3></td>
+                    <td><div id='C_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="D_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores de morbidade:</h3></td>
+                    <td><div id='D_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="E_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores de recurso:</h3></td>
+                    <td><div id='E_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="F_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores de cobertura:</h3></td>
+                    <td><div id='F_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="G_series_div">
+            <table>
+                <tr>
+                    <td><h3>Indicadores de fatores de risco e protecao:</h3></td>
+                    <td><div id='G_series'></div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+
+        <div id="apply_div">
+            <table>
+                <tr>
+                    <td><div id='apply'>Fazer grafico</div></td>
+                </tr>
+                <hr>
+            </table>
+        </div>
+        <div id="result_chart_div">
+            <br></br>
+            <h2>Grafico:</h2>
+            <div id="result_chart"></div>
+        </div>
+        <br></br>
+        <div id="reset">Reset</div>
+    </body>
+</html>
