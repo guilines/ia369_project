@@ -50,6 +50,7 @@ $(document).ready(function() {
                         dataType: "json",
                         data: JSON.stringify(data),
                         success: function(data) {
+                            alert('ok');
                             console.log(data);
                             //var obj = JSON.parse(data);
                             //console.log(obj);
@@ -69,7 +70,7 @@ function getLists() {
         var checkedItems = [];
         var items = $("#"+tabs[i]+"_series").jqxDropDownList('getCheckedItems');
         $.each(items, function (index) {
-            checkedItems.push(this.index);
+            checkedItems.push(this.label);
         });      
         data[tabs[i]] = checkedItems;
     }
@@ -95,53 +96,25 @@ function createWidgets() {
         theme: 'energyblue'
     });
 
-    createTabs();
+    var sources = []
+    var data = {};
+    data['operation'] = 'getTabsNames'
+    jQuery.ajax({   type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    success: function(data) {
+                        sources=data.names;
+                        console.log(sources);
+                        createTabs(sources);
+                    },
+    });
+
 }
 
 
-function createTabs() {
-    var default_width = '350'
+function createTabs(sources) {
+    var default_width = '600'
     var default_heigth = '35'
-
-    var source_A = [
-        'Populacao total',
-        'Razao de sexo'
-    ];
-
-    var source_B = [
-        'Taxa de analfabetismo',
-        'Escolaridade da populacao de 15 anos ou mais'
-    ];
-
-    var source_C = [
-        'Taxa de mortalidade infantil',
-        'Taxa de mortalidade neonatal precoce'
-    ];
-
-    var source_D = [
-        'Sarampo',
-        'Difteria'
-    ];
-
-    var source_E = [
-        'Numero de profissionais de saude por habitante',
-        'Numero de concluintes de cursos de graduacao em saude'
-    ];
-
-    var source_F = [
-        'Numero de consultas medicas no SUS por habitante',
-        'Proporcao da populacao que refere ter consultado medico nos ultimos 12 meses'
-    ];
-
-    var source_G = [
-        'Prevalencia de diabete melito',
-        'Prevalencia de hipertensao arterial'
-    ];
-
-    var sources = [source_A,source_B,
-                    source_C,source_D,
-                    source_E,source_F,
-                    source_G]
 
     for (i=0;i<tabs.length;i++) {
         $("#"+tabs[i]+"_series").jqxDropDownList({
@@ -162,9 +135,9 @@ function methodValuesStr(data) {
 }
 
 
-function resultChart(dt) {
-
-    var data = google.visualization.arrayToDataTable(dt.values[0]);
+function resultChart(data) {
+    console.log(data)
+    var data = google.visualization.arrayToDataTable(data.graph);
     //var data = new google.visualization.DataTable();
     //data.addColumn('date','Ano');
     //data.addColumn('number','Brasil');

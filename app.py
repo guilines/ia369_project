@@ -43,8 +43,10 @@ class messages:
                 reqs =  _start(reqs)
             elif reqs['operation'] == 'apply':
                 reqs =  _apply(reqs)
+            elif reqs['operation'] == 'getTabsNames':
+                reqs =  _getTabsNames(reqs)
         #s = reqs.value['textfield']
-        return json.dumps(reqs)
+        return json.dumps(reqs,ignore_nan=True)
 
 def _reset(reqs):
     return True
@@ -52,11 +54,26 @@ def _reset(reqs):
 def _start(reqs):
     return True
 
+def _getTabsNames(reqs):
+    reqs['names'] = getData.getSheetNames()
+    return reqs
+
 def _apply(reqs):
-    for keys in reqs:
-        print '{}:{}'.format(keys,reqs[keys])
-    reqs['values'] = getData.plot_A()
-    print reqs
+    data={}
+    values=[]
+    years=[]
+    if 'plots' in reqs:
+        plots=reqs['plots']
+        for key in plots:
+            print '{}:{}'.format(key,plots[key])
+            if key == 'A':
+                print 'A!'
+                values,years,names = getData.getA(plots[key])
+    graph = getData.setGraph(values,years)
+    reqs['graph']=[names]+graph
+    
+    print reqs['graph']
+    #reqs['values'] = getData.plot_A()
     return reqs
 #def _update_values_chart(reqs):
 #    ''' Function responsible to get/update data from a company.'''
