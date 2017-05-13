@@ -4,6 +4,7 @@ import simplejson as json
 import numpy as np
 import pandas
 import webbrowser
+import itertools
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from pandas.tools.plotting import scatter_matrix
@@ -51,6 +52,7 @@ def _getTabsNames(reqs):
     return reqs
 
 def _apply(reqs):
+    VERBOSE=False
     data={}
     values=[]
     years=[]
@@ -58,18 +60,40 @@ def _apply(reqs):
     if 'plots' in reqs:
         plots=reqs['plots']
         for key in plots:
-            print '{}:{}'.format(key,plots[key])
+            if VERBOSE: print '{}:{}'.format(key,plots[key])
             if plots[key]:
                 value,year,name = getData.getTabs(plots[key])
-                values.append(value)
-                years.append(year)
-                names.append(name)
-    #TODO: fix this appending, it gets one dimension bigger than it should, requiring additional index on setGraph
-    print "values at _apply{0} \n years at _apply{1}".format(values, years)
-    graph = getData.setGraph(values,years)
-    reqs['graph']=[names]+graph
+                #TODO: This is a little messed up
+                # the format is varying a lot
+                #This should return always one type: [[A.1],[A.2],[B.1],[D.3]]
+                values+=value
+                years+=year
+                names+=[name]
     
-    print reqs['graph']
+    if len(names) > 1:
+        tmp_names=list(itertools.chain.from_iterable(names))
+        names=[]
+        [names.append(item) for item in tmp_names if item not in names]
+        names=[names]
+
+    #TODO: fix this appending, it gets one dimension bigger than it should, requiring additional index on setGraph
+    if VERBOSE:
+        print '\n------'
+        print "values at _apply{0} \n years at _apply{1}".format(values, years)
+    graph = getData.setGraph(values,years)
+
+    if VERBOSE:
+        print '--'
+        print 'Names:'
+        print names 
+        print 'graph:'
+        print graph
+
+
+    reqs['graph']=names+graph
+    if VERBOSE:
+        print '\n\n--------' 
+        print reqs['graph']
     #reqs['values'] = getData.plot_A()
     return reqs
 

@@ -1,3 +1,4 @@
+import itertools
 import pandas as pd
 import numpy as np
 from modules.get_constrains import *
@@ -8,48 +9,60 @@ def readTab(filename='data/Serie_Grupo_A.xlsx',sheetname='A.2',header=3,index_co
             header=header,index_col=index_col,skip_footer=skip_footer)
 
 def setGraph(series,years):
+    VERBOSE=False
+    seriesSize=len(series)
     series=np.asarray(series)
     years=np.asarray(years)
 
-    yearsArray=np.sort(np.unique(np.concatenate(years)))
-    graph=np.zeros(shape=(np.size(yearsArray[0]),series.size+1))
-    print "yearsArray{0}".format(yearsArray)
-    graph[:,0]=yearsArray[0]
-    for i in range(1,series.size+1):
+    _years=years
+    while any(isinstance(el, list) for el in _years):
+        _years=list(itertools.chain.from_iterable(years))
+    yearsArray=np.sort(np.unique(_years))
+
+    graph=np.zeros(shape=(np.size(yearsArray),seriesSize+1))
+    if VERBOSE: print "yearsArray{0}".format(yearsArray)
+    graph[:,0]=yearsArray
+
+
+    for i in range(1,seriesSize+1):
         graph[:,i]=np.nan
-#TODO: Gotta fix it for only one plot
-    for i in range(series[0].size):
-        seriesTab=series[0][i]
-        yearsTab=years[0][i]
-        for s,y in zip(seriesTab,yearsTab):
-            k = (yearsTab.index(y)) #index to insert the value
-            graph[k,i+1]=s
+
+    if VERBOSE:
+        print '\n--'
+        print 'Graph'
+        print graph
+        print 'Series'
+        print series
+        print 'Years'
+        print years
+        print '--\n' 
+
+    if not seriesSize == 1:
+        for i in range(seriesSize):
+            seriesTab=series[i]
+            yearsTab=years[i]
+            for s,y in zip(seriesTab,yearsTab):
+                k = (yearsTab.index(y)) #index to insert the value
+                graph[k,i+1]=s
+
+
+    else:
+        graph[:,1]=series
+
+    if VERBOSE:
+        print '\n--'
+        print 'Graph'
+        print graph
+        print '--\n'
+
+
     graph=graph.tolist()
+ 
+
     for i in range(len(graph)):
         graph[i][0] = str(int(graph[i][0]))
+
     return graph
-
-
-    #nTabs=len(series)
-    #graphVec=np.empty(shape=(years.size,nTabs))
-    #graphVec[:,0]=years
-
-    ##Series = [[[year,value],[year,value],[year,value]],[],[]]
-    #for i in years.size:
-    #    if graph[i][0] not in series[0,0,:]
-    #
-
-    ## Let all vectors with same dates:
-    #for tabs in enumerate(np.asarray(series)):
-    #    for x,y in tabs:
-
-    #        if x not in years:
-    #            
-
-    #    
-    #            
-    #            
-    #graphVec.append(['year','A.1','A.2','B.1'])
 
 
 def getA(tabs=[1],regiao='Brasil'):
@@ -101,8 +114,8 @@ def getA(tabs=[1],regiao='Brasil'):
     #return series
 
 def getTabs(tabs=[1],region='Brasil'):
-
-    print "tabs{}".format(tabs)
+    VERBOSE=False
+    if VERBOSE: print "tabs{}".format(tabs)
     series = list()
     years = list()
     names = ['year']
@@ -112,7 +125,7 @@ def getTabs(tabs=[1],region='Brasil'):
         names.append(sp[1][1:])
         group = _tab.split('.')[0]
         sheetName, header, indexCol, footer, label = getConstrains(tab=_tab)
-        print sheetName, header, indexCol, footer, label
+        if VERBOSE: print sheetName, header, indexCol, footer, label
 
         dados = readTab('data/Serie_Grupo_{0}.xlsx'.format((group)), sheetname=_tab, header=(header),
                       index_col=indexCol, skip_footer=footer, )

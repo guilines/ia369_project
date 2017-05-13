@@ -50,7 +50,6 @@ $(document).ready(function() {
                         dataType: "json",
                         data: JSON.stringify(data),
                         success: function(data) {
-                            alert('ok');
                             console.log(data);
                             //var obj = JSON.parse(data);
                             //console.log(obj);
