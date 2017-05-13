@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from modules.get_constrains import *
 
 
 def readTab(filename='data/Serie_Grupo_A.xlsx',sheetname='A.2',header=3,index_col=0,skip_footer=6):
@@ -9,18 +10,19 @@ def readTab(filename='data/Serie_Grupo_A.xlsx',sheetname='A.2',header=3,index_co
 def setGraph(series,years):
     series=np.asarray(series)
     years=np.asarray(years)
-    
+
     yearsArray=np.sort(np.unique(np.concatenate(years)))
-    graph=np.zeros(shape=(yearsArray.size,series.size+1))
-    graph[:,0]=yearsArray
+    graph=np.zeros(shape=(np.size(yearsArray[0]),series.size+1))
+    print "yearsArray{0}".format(yearsArray)
+    graph[:,0]=yearsArray[0]
     for i in range(1,series.size+1):
         graph[:,i]=np.nan
-
-    for i in range(series.size):
-        seriesTab=series[i]
-        yearsTab=years[i]
+#TODO: Gotta fix it for only one plot
+    for i in range(series[0].size):
+        seriesTab=series[0][i]
+        yearsTab=years[0][i]
         for s,y in zip(seriesTab,yearsTab):
-            k = np.where(yearsArray==y)[0]
+            k = (yearsTab.index(y)) #index to insert the value
             graph[k,i+1]=s
     graph=graph.tolist()
     for i in range(len(graph)):
@@ -52,49 +54,80 @@ def setGraph(series,years):
 
 def getA(tabs=[1],regiao='Brasil'):
     #Atencao, no javascript, tabs comeca no 0, e nos arquivos, em 1
-    series=list()
-    years=list()
-    names=['year']
+    getTabs(tabs, regiao)
+    # print "tabs{}".format(tabs)
+    # series=list()
+    # years=list()
+    # names=['year']
+    # for tab in tabs:
+    #     sp = tab.split(':')
+    #     _tab = sp[0]
+    #     names.append(sp[1][1:])
+    #     dados=readTab(filename='data/Serie_Grupo_A.xlsx',
+    #             sheetname=_tab)
+    #
+    #     x=dados.keys()
+    #     dados=dados.transpose()
+    #     y=dados[regiao]
+    #     value=[]
+    #     year=[]
+    #     for i,v in zip(x,y):
+    #         value.append(v)
+    #         year.append(str(i))
+    #     series.append(value)
+    #     years.append(year)
+    # return series,years,names
+    #
+    #
+    # #res.append(['Ano','Razao de sexo'])
+    # for i,v in zip(x,y):
+    #     res.append([str(i),v])
+    # series.append(res)
+    #
+    #
+    # dados=readTab(sheetname='A.4')
+    # x=dados.keys()
+    # dados=dados.transpose()
+    # y=dados.Brasil
+    # res=[]
+    # res.append(['Ano','Grau de Urbanizacao'])
+    # for i,v in zip(x,y):
+    #     res.append([str(i),v])
+    # series.append(res)
+    #
+    # return series
+    # #return dados.Brasil.values.tolist()
+    #series.append(dados.Brasil.values.tolist())
+    #return series
+
+def getTabs(tabs=[1],region='Brasil'):
+
+    print "tabs{}".format(tabs)
+    series = list()
+    years = list()
+    names = ['year']
     for tab in tabs:
         sp = tab.split(':')
         _tab = sp[0]
         names.append(sp[1][1:])
-        dados=readTab(filename='data/Serie_Grupo_A.xlsx',
-                sheetname=_tab)
-    
-        x=dados.keys()
-        dados=dados.transpose()
-        y=dados[regiao]
-        value=[]
-        year=[]
-        for i,v in zip(x,y):
+        group = _tab.split('.')[0]
+        sheetName, header, indexCol, footer, label = getConstrains(tab=_tab)
+        print sheetName, header, indexCol, footer, label
+
+        dados = readTab('data/Serie_Grupo_{0}.xlsx'.format((group)), sheetname=_tab, header=(header),
+                      index_col=indexCol, skip_footer=footer, )
+
+        x = dados.keys()
+        dados = dados.transpose()
+        y = dados[region]
+        value = []
+        year = []
+        for i, v in zip(x, y):
             value.append(v)
             year.append(str(i))
         series.append(value)
         years.append(year)
-    return series,years,names
-
-
-    #res.append(['Ano','Razao de sexo'])
-    for i,v in zip(x,y):
-        res.append([str(i),v])
-    series.append(res)
-    
-    
-    dados=readTab(sheetname='A.4')
-    x=dados.keys()
-    dados=dados.transpose()
-    y=dados.Brasil
-    res=[]
-    res.append(['Ano','Grau de Urbanizacao'])
-    for i,v in zip(x,y):
-        res.append([str(i),v])
-    series.append(res)
-
-    return series
-    #return dados.Brasil.values.tolist()
-    #series.append(dados.Brasil.values.tolist())
-    #return series
+    return series, years, names
 
 def getSheetNames():
     grupos=['A','B','C','D','E','F','G']
@@ -110,3 +143,4 @@ def getSheetNames():
                 continue
         sources.append(tmp)
     return sources
+
