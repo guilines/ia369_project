@@ -55,8 +55,6 @@ $(document).ready(function() {
                         data: JSON.stringify(data),
                         success: function(data) {
                             console.log(data);
-                            //var obj = JSON.parse(data);
-                            //console.log(obj);
                             resultChart(data);
 	                        $("#reset").show();
                         },
@@ -137,38 +135,12 @@ function createTabs(sources) {
     };
 
 }
-function companyValuesStr(data) {
-    $("#company_values_str").jqxListBox({ source: data, width: '900px', height: '100px',});
-}
-
-function methodValuesStr(data) {
-    $("#method_values_str").jqxListBox({ source: data, width: '900px', height: '100px',});
-}
-
 
 function resultChart(data) {
     console.log(data)
     var data = google.visualization.arrayToDataTable(data.graph);
-    //var data = new google.visualization.DataTable();
-    //data.addColumn('date','Ano');
-    //data.addColumn('number','Brasil');
-    //console.log(dt.values);
-    //data.addRows(dt.values);
-
-    //data.addColumn('date', 'Day');
-    //data.addColumn('number', "Adjustment Price [$]");
-    //data.addColumn('number', "Predicted Price [$]");
-/*
-    for (i=0; i < dt['date'].length; i++) {
-        data.addRows([[new Date(dt['date'][i].split('-')), 
-                        dt['adj_price'][i], 
-                        dt['pred_values'][i]
-        
-        ]]);
-    }
-
-    var cTitle = dt['company_name'] + ' Prediction';*/
-    cTitle='Tois';
+    
+    cTitle='Resultado';
     var materialOptions = {
         chart : {title: cTitle},
         curveType: 'function',
@@ -186,14 +158,13 @@ function resultChart(data) {
     };
    
     var chartDiv = document.getElementById('result_chart'); 
-    //var materialChart = new google.charts.Scatter(chartDiv);
 
     if ($("#chart_type").jqxSwitchButton('checked')){
         var materialChart = new google.charts.Bar(chartDiv);
     } else {
         var materialChart = new google.charts.Scatter(chartDiv);
+        //var materialChart = new google.visualization.ScatterChart(chartDiv);
     }
-    //var materialChart = new google.visualization.ScatterChart(chartDiv);
     materialChart.draw(data, materialOptions);
 
     $("#result_chart_div").show();
