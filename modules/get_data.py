@@ -118,11 +118,10 @@ def getTabs(tabs=[1],region='Brasil'):
     if VERBOSE: print "tabs{}".format(tabs)
     series = list()
     years = list()
-    names = ['year']
+    names = ['Ano']
     for tab in tabs:
         sp = tab.split(':')
         _tab = sp[0]
-        names.append(sp[1][1:])
         group = _tab.split('.')[0]
         sheetName, header, indexCol, footer, label = getConstrains(tab=_tab)
         if VERBOSE: print sheetName, header, indexCol, footer, label
@@ -135,6 +134,7 @@ def getTabs(tabs=[1],region='Brasil'):
         y = dados[region]
         value = []
         year = []
+        names.append(label)
         for i, v in zip(x, y):
             value.append(v)
             year.append(str(i))

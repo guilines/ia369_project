@@ -16,6 +16,7 @@ def getConstrains(tab):
                     ['A.10', 3, 0, 10, u" Taxa bruta e padronizada de mortalidade"],
                     ['A.11', 3, 0, 6, u"Esperança de vida ao nascer"],
                     ['A.12', 3, 0, 6, u"Esperança de vida aos 60 anos"],
+                    ['A.14', 3, 0, 28, u"Proporção de idosos na população (%)"],
                     ['B.1', 3, 0, 9, u"Taxa de analfabetismo(Homens e Mulheres)"],
                     ['B.3', 3, 0, 8, u"Escolaridade (%) da população de 18 a 24 anos"],
                     ['B.8', 4, 0, 13, u"Renda média domiciliar per capita"],
