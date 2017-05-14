@@ -5,10 +5,13 @@ from modules.get_constrains import *
 
 
 def readTab(filename='data/Serie_Grupo_A.xlsx',sheetname='A.2',header=3,index_col=0,skip_footer=6):
+    ''' Read a .xlsx file with multiple sheets, returning it contents'''
     return pd.read_excel(open(filename,'rb'),sheetname=sheetname,
             header=header,index_col=index_col,skip_footer=skip_footer)
 
 def setGraph(series,years):
+    '''Joing multiple series information into one n-dimensional vector, that will be plot.'''
+
     VERBOSE=False
     seriesSize=len(series)
     series=np.asarray(series)
@@ -70,10 +73,11 @@ def setGraph(series,years):
 
 
 def getA(tabs=[1],regiao='Brasil'):
-    #Atencao, no javascript, tabs comeca no 0, e nos arquivos, em 1
+    ''' Deprecated'''
     getTabs(tabs, regiao)
     
 def getTabs(tabs=[1],region='Brasil'):
+    ''' Return information of a sheet tab.'''
     VERBOSE=False
     if VERBOSE: print "tabs{}".format(tabs)
     series = list()
@@ -103,6 +107,7 @@ def getTabs(tabs=[1],region='Brasil'):
     return series, years, names
 
 def getSheetNames():
+    ''' Return all sheet names available to be plot'''
     grupos=['A','B','C','D','E','F','G']
     sources=[]
     for let in grupos:
