@@ -14,6 +14,19 @@ $(document).ready(function() {
 	$("#reset").hide();
 
     $('#reset').on('click', function () {
+        $("#desc_div").hide();
+	    $("#start").hide();
+        for (i=0;i<tabs.length;i++) {
+            $("#"+tabs[i]+"_series_div").show();
+        };
+	    $("#chart_type_div").show();
+	    $("#apply_div").show();
+	    $("#result_chart_div").hide();
+	    $("#reset").hide();
+    });
+
+
+/*    $('#reset').on('click', function () {
         var data = {};
         data['operation'] = 'reset';
         jQuery.ajax({   type: "POST",
@@ -24,7 +37,7 @@ $(document).ready(function() {
                         },
                     });
 
-    });
+    });*/
 
 	$('#start').on('click', function () {
         var data = {};
@@ -166,6 +179,8 @@ function resultChart(data) {
         //var materialChart = new google.visualization.ScatterChart(chartDiv);
     }
     materialChart.draw(data, materialOptions);
-
+    for (i=0;i<tabs.length;i++) {
+        $("#"+tabs[i]+"_series_div").hide();
+    }
     $("#result_chart_div").show();
 }
