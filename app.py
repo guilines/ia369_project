@@ -71,6 +71,11 @@ def _getForbidedSheets():
         'G.1','G.2','G.4','G.19','G.5','G.6','G.7','G.8',
         'G.10','G.11','G.13','G.14','G.15.1','G.15.2','G.16'
         ]
+    fS =['A.6',
+         'C.2', 'C.4', 'C.8', 'C.9',
+         'D.5', 'D.31', 'D.29', 'D.30', 'D.23',
+         'E.18', 'E.8', 'E.9.1', 'E.20', 'E.21', 'E.14',
+         'G.3', 'G.7']
 
     return fS
 
@@ -87,7 +92,7 @@ def _getTabsNames(reqs):
     return reqs
 
 def _apply(reqs):
-    VERBOSE=False
+    VERBOSE=True
     data={}
     values=[]
     years=[]
