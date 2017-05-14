@@ -9,7 +9,7 @@ def readTab(filename='data/Serie_Grupo_A.xlsx',sheetname='A.2',header=3,index_co
             header=header,index_col=index_col,skip_footer=skip_footer)
 
 def setGraph(series,years):
-    VERBOSE=True
+    VERBOSE=False
     seriesSize=len(series)
     series=np.asarray(series)
     years=np.asarray(years)
@@ -36,7 +36,8 @@ def setGraph(series,years):
         print 'Years'
         print years
         print '--\n' 
-
+    
+    _yearsList = yearsArray.tolist()
     if not seriesSize == 1:
         for i in range(seriesSize):
             seriesTab=series[i]
@@ -44,7 +45,8 @@ def setGraph(series,years):
             if isinstance(yearsTab, np.ndarray):
                 yearsTab=yearsTab.tolist()
             for s,y in zip(seriesTab,yearsTab):
-                k = (yearsTab.index(y)) #index to insert the value
+                #k = (yearsTab.index(y)) #index to insert the value
+                k = (_yearsList.index(y)) #index to insert the value
                 graph[k,i+1]=s
 
 
