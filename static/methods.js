@@ -2,13 +2,14 @@
 var tabs = ['A','B','C','D','E','F','G'];
 
 $(document).ready(function() {
-    google.charts.load('current', {'packages':['line', 'corechart', 'scatter']});
+    google.charts.load('current', {'packages':['line', 'corechart', 'scatter','bar']});
     //google.charts.setOnLoadCallback(drawChart);
     createWidgets();
     for (i=0;i<tabs.length;i++) {
         $("#"+tabs[i]+"_series_div").hide();
     };
 	$("#apply_div").hide();
+	$("#chart_type_div").hide();
 	$("#result_chart_div").hide();
 	$("#reset").hide();
 
@@ -32,9 +33,12 @@ $(document).ready(function() {
                         dataType: "json",
                         data: JSON.stringify(data),
                         success: function(data) {
+	                        $("#desc_div").hide();
+	                        $("#start").hide();
                             for (i=0;i<tabs.length;i++) {
                                 $("#"+tabs[i]+"_series_div").show();
                             };
+	                        $("#chart_type_div").show();
 	                        $("#apply_div").show();
                             var obj = JSON.parse(data);
                         },
@@ -45,7 +49,7 @@ $(document).ready(function() {
 	$('#apply').on('click', function () {
         var data = {};
         data['operation'] = 'apply'
-        data['plots'] = getLists(); 
+        data['plots'] = getLists();
         jQuery.ajax({   type: "POST",
                         dataType: "json",
                         data: JSON.stringify(data),
@@ -93,6 +97,14 @@ function createWidgets() {
         width: '150',
         height: '25',
         theme: 'energyblue'
+    });
+
+    $("#chart_type").jqxSwitchButton({
+        width: '150',
+        height: '25',
+        theme: 'energyblue',
+        onLabel: 'Bar Plot',
+        offLabel: 'Scatter Plot'
     });
 
     var sources = []
@@ -174,7 +186,13 @@ function resultChart(data) {
     };
    
     var chartDiv = document.getElementById('result_chart'); 
-    var materialChart = new google.charts.Scatter(chartDiv);
+    //var materialChart = new google.charts.Scatter(chartDiv);
+
+    if ($("#chart_type").jqxSwitchButton('checked')){
+        var materialChart = new google.charts.Bar(chartDiv);
+    } else {
+        var materialChart = new google.charts.Scatter(chartDiv);
+    }
     //var materialChart = new google.visualization.ScatterChart(chartDiv);
     materialChart.draw(data, materialOptions);
 

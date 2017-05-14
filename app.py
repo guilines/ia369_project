@@ -47,8 +47,26 @@ def _reset(reqs):
 def _start(reqs):
     return True
 
+def _getForbidedSheets():
+    fS=['A.3','A.16','A.7','A.6','A.18','A.8','A.9','A.10',
+        'A.11','A.12','B.1','B.2.1','B.2.2','B.8','B.5.1',
+        'B.5.2','B.10','C.1','C.1.4','C.1.3','C.2','C.16',
+        'C.18','C.4','C.5','C.8','C.9','C.10','C.12','C.14',
+        'C.17']
+
+    return fS
+
 def _getTabsNames(reqs):
-    reqs['names'] = getData.getSheetNames()
+    sheetNames = getData.getSheetNames()
+    fS = _getForbidedSheets()
+    for i,dummy in enumerate(sheetNames):
+        for name in dummy:
+            for nUse in fS:
+                if nUse+':' in name:
+                    print name
+                    sheetNames[i].remove(name)
+        
+    reqs['names'] = sheetNames
     return reqs
 
 def _apply(reqs):
@@ -63,9 +81,6 @@ def _apply(reqs):
             if VERBOSE: print '{}:{}'.format(key,plots[key])
             if plots[key]:
                 value,year,name = getData.getTabs(plots[key])
-                #TODO: This is a little messed up
-                # the format is varying a lot
-                #This should return always one type: [[A.1],[A.2],[B.1],[D.3]]
                 values+=value
                 years+=year
                 names+=[name]
@@ -76,7 +91,6 @@ def _apply(reqs):
         [names.append(item) for item in tmp_names if item not in names]
         names=[names]
 
-    #TODO: fix this appending, it gets one dimension bigger than it should, requiring additional index on setGraph
     if VERBOSE:
         print '\n------'
         print "values at _apply{0} \n years at _apply{1}".format(values, years)
