@@ -154,11 +154,11 @@ function resultChart(data) {
     var data = google.visualization.arrayToDataTable(data.graph);
     
     cTitle='Resultado';
-    var materialOptions = {
+    var scatterOptions = {
         chart : {title: cTitle},
         curveType: 'function',
-        width: 900,
-        height: 500,
+        width: 1200,
+        height: 700,
         /*series: {
             0:{color: 'black', visibleInLegend: true, lineWidth: 0, pointSize: 2, 
                 pointsVisible: true},
@@ -169,16 +169,28 @@ function resultChart(data) {
         explorer: { actions: ['dragToZoom', 'rightClickToReset'], axis: 'horizontal' },
         legend: { position: 'bottom' }
     };
-   
+
+    var barOptions = {
+        chart : {title: cTitle},
+        curveType: 'function',
+        width: 1200,
+        height: 700,
+        bars: 'horizontal', // Required for Material Bar Charts.
+        backgroundColor: '#f1f8e9',
+        explorer: { actions: ['dragToZoom', 'rightClickToReset'], axis: 'horizontal' },
+        legend: { position: 'bottom' }
+    };
+
     var chartDiv = document.getElementById('result_chart'); 
 
     if ($("#chart_type").jqxSwitchButton('checked')){
         var materialChart = new google.charts.Bar(chartDiv);
+        materialChart.draw(data, barOptions);
     } else {
         var materialChart = new google.charts.Scatter(chartDiv);
+        materialChart.draw(data, scatterOptions);
         //var materialChart = new google.visualization.ScatterChart(chartDiv);
     }
-    materialChart.draw(data, materialOptions);
     for (i=0;i<tabs.length;i++) {
         $("#"+tabs[i]+"_series_div").hide();
     }
