@@ -1,43 +1,13 @@
-
-var tabs = ['A','B','C','D','E','F','G'];
-
 $(document).ready(function() {
-    google.charts.load('current', {'packages':['line', 'corechart', 'scatter','bar']});
-    //google.charts.setOnLoadCallback(drawChart);
     createWidgets();
-    for (i=0;i<tabs.length;i++) {
-        $("#"+tabs[i]+"_series_div").hide();
-    };
-	$("#apply_div").hide();
-	$("#chart_type_div").hide();
 	$("#result_chart_div").hide();
+	$("#evaluate_div").hide();
 	$("#reset").hide();
+	$("#thanks_div").hide();
 
     $('#reset').on('click', function () {
-        $("#desc_div").hide();
-	    $("#start").hide();
-        for (i=0;i<tabs.length;i++) {
-            $("#"+tabs[i]+"_series_div").show();
-        };
-	    $("#chart_type_div").show();
-	    $("#apply_div").show();
-	    $("#result_chart_div").hide();
-	    $("#reset").hide();
+        location.reload();
     });
-
-
-/*    $('#reset').on('click', function () {
-        var data = {};
-        data['operation'] = 'reset';
-        jQuery.ajax({   type: "POST",
-                        data: data,
-                        success: function(data) {
-                            var obj = JSON.parse(data);
-                            location.reload(); 
-                        },
-                    });
-
-    });*/
 
 	$('#start').on('click', function () {
         var data = {};
@@ -46,50 +16,53 @@ $(document).ready(function() {
                         dataType: "json",
                         data: JSON.stringify(data),
                         success: function(data) {
-	                        $("#desc_div").hide();
-	                        $("#start").hide();
-                            for (i=0;i<tabs.length;i++) {
-                                $("#"+tabs[i]+"_series_div").show();
-                            };
-	                        $("#chart_type_div").show();
-	                        $("#apply_div").show();
-                            var obj = JSON.parse(data);
+	                        next_graph(data);
                         },
                     });
-
     });
 
-	$('#apply').on('click', function () {
+    $("#eval_1").on('checked',function () {
+        $('#eval_1').jqxRadioButton('disable');
+        $("#eval_1").jqxRadioButton('uncheck');
+        $("#result_chart_div").hide();
+
         var data = {};
-        data['operation'] = 'apply'
-        data['plots'] = getLists();
+        data['operation'] = 'next_graph';
+        data['selected'] = 'graph1'
         jQuery.ajax({   type: "POST",
                         dataType: "json",
                         data: JSON.stringify(data),
                         success: function(data) {
-                            console.log(data);
-                            resultChart(data);
-	                        $("#reset").show();
+                            if (data.stop) {
+                                finishTest();
+                            } else {
+	                        next_graph(data);
+	                        }
                         },
                     });
-
     });
 
+    $("#eval_2").on('checked',function () {
+        $('#eval_2').jqxRadioButton('disable');
+        $("#eval_2").jqxRadioButton('uncheck');
+        $("#result_chart_div").hide();
+
+        var data = {};
+        data['operation'] = 'next_graph';
+        data['selected'] = 'graph2'
+        jQuery.ajax({   type: "POST",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function(data) {
+	                        if (data.stop) {
+                                finishTest();
+                            } else {
+	                        next_graph(data);
+	                        }
+                        },
+                    });
+    });
 });
-
-
-function getLists() {
-    var data = {};
-    for (i=0;i<tabs.length;i++) {
-        var checkedItems = [];
-        var items = $("#"+tabs[i]+"_series").jqxDropDownList('getCheckedItems');
-        $.each(items, function (index) {
-            checkedItems.push(this.label);
-        });      
-        data[tabs[i]] = checkedItems;
-    }
-    return data;
-}
 
 function createWidgets() {
 	$("#start").jqxButton({
@@ -104,95 +77,48 @@ function createWidgets() {
         theme: 'energyblue'
     });
 
-	$("#apply").jqxButton({
+    $("#eval_1").jqxRadioButton({
         width: '150',
-        height: '25',
-        theme: 'energyblue'
+        height: '25'
     });
 
-    $("#chart_type").jqxSwitchButton({
+    $("#eval_2").jqxRadioButton({
         width: '150',
-        height: '25',
-        theme: 'energyblue',
-        onLabel: 'Bar Plot',
-        offLabel: 'Scatter Plot'
+        height: '25'
     });
 
-    var sources = []
-    var data = {};
-    data['operation'] = 'getTabsNames'
-    jQuery.ajax({   type: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(data),
-                    success: function(data) {
-                        sources=data.names;
-                        console.log(sources);
-                        createTabs(sources);
-                    },
+	$("#evaluate").jqxRating({
+        width: '150',
+        height: '25'
     });
+    $("#evaluate").hide();
 
 }
 
+function finishTest(data) {
+    $("#result_chart_div").hide();
+	$("#result_chart2_div").hide();
+	$("#evaluate_div").hide();
 
-function createTabs(sources) {
-    var default_width = '600'
-    var default_heigth = '35'
-
-    for (i=0;i<tabs.length;i++) {
-        $("#"+tabs[i]+"_series").jqxDropDownList({
-            source: sources[i],
-            width: default_width,
-            height: default_heigth,
-            checkboxes: true
-        });
-    };
-
+    $("#reset").show();
+	$("#thanks_div").show();
 }
 
-function resultChart(data) {
-    console.log(data)
-    var data = google.visualization.arrayToDataTable(data.graph);
-    
-    cTitle='Resultado';
-    var scatterOptions = {
-        chart : {title: cTitle},
-        curveType: 'function',
-        width: 1200,
-        height: 700,
-        /*series: {
-            0:{color: 'black', visibleInLegend: true, lineWidth: 0, pointSize: 2, 
-                pointsVisible: true},
-            1:{color: 'red', visibleInLegend: true, lineWidth: 2, pointSize: 0, 
-                pointsVisible: false }
-        },*/
-        backgroundColor: '#f1f8e9',
-        explorer: { actions: ['dragToZoom', 'rightClickToReset'], axis: 'horizontal' },
-        legend: { position: 'bottom' }
-    };
+function next_graph(data) {
+	$("#desc_div").hide();
+	$("#start").hide();
+	$("#evaluate_div").hide();
 
-    var barOptions = {
-        chart : {title: cTitle},
-        curveType: 'function',
-        width: 1200,
-        height: 700,
-        bars: 'horizontal', // Required for Material Bar Charts.
-        backgroundColor: '#f1f8e9',
-        explorer: { actions: ['dragToZoom', 'rightClickToReset'], axis: 'horizontal' },
-        legend: { position: 'bottom' }
-    };
 
-    var chartDiv = document.getElementById('result_chart'); 
+    $("#result_chart1").attr('src','');
+	$("#result_chart2").attr('src','');
 
-    if ($("#chart_type").jqxSwitchButton('checked')){
-        var materialChart = new google.charts.Bar(chartDiv);
-        materialChart.draw(data, barOptions);
-    } else {
-        var materialChart = new google.charts.Scatter(chartDiv);
-        materialChart.draw(data, scatterOptions);
-        //var materialChart = new google.visualization.ScatterChart(chartDiv);
-    }
-    for (i=0;i<tabs.length;i++) {
-        $("#"+tabs[i]+"_series_div").hide();
-    }
-    $("#result_chart_div").show();
+	$("#result_chart1").attr('src',data.graph1);
+	$("#result_chart2").attr('src',data.graph2);
+	$('#eval_1').jqxRadioButton('enable');
+	$('#eval_2').jqxRadioButton('enable');
+
+	$("#result_chart_div").show();
+
+
 }

@@ -1,15 +1,12 @@
-import web
-import sys
 import simplejson as json
-import numpy as np
-import pandas
-import webbrowser
-import itertools
-from datetime import datetime, timedelta
-import matplotlib.pyplot as plt
-from pandas.tools.plotting import scatter_matrix
+import web
+import modules.get_graphs as graphs
 
-import modules.get_data as getData
+g_Graphs = graphs.Graphs()
+g_historygraph='modules/data/results.csv'
+g_N=15
+g_numOfEval = g_N
+
 urls = ('/', 'messages')
 render = web.template.render('templates/')
 
@@ -39,10 +36,8 @@ class messages:
                 reqs =  _reset(reqs)
             elif reqs['operation'] == 'start':
                 reqs =  _start(reqs)
-            elif reqs['operation'] == 'apply':
-                reqs =  _apply(reqs)
-            elif reqs['operation'] == 'getTabsNames':
-                reqs =  _getTabsNames(reqs)
+            elif reqs['operation'] == 'next_graph':
+                reqs = _next_graph(reqs)
         #s = reqs.value['textfield']
         return json.dumps(reqs,ignore_nan=True)
 
@@ -51,73 +46,41 @@ def _reset(reqs):
     return True
 
 def _start(reqs):
-    '''Deprecated'''
-    return True
-
-def _getForbidedSheets():
-    '''Set manually sheets that will not work with this plotter'''
-    fS =['A.6',
-         'C.2', 'C.4', 'C.8', 'C.9',
-         'D.5', 'D.31', 'D.29', 'D.30', 'D.23',
-         'E.18', 'E.8', 'E.9.1', 'E.20', 'E.21', 'E.14',
-         'G.3', 'G.7']
-    return fS
-
-def _getTabsNames(reqs):
-    '''Get all sheet names from data files, and return them
-    in a list'''
-    
-    #Get sheet names
-    sheetNames = getData.getSheetNames()
-
-    #Eliminate not working sheets
-    fS = _getForbidedSheets()
-    for i,dummy in enumerate(sheetNames):
-        for name in dummy:
-            for nUse in fS:
-                if nUse+':' in name:
-                    sheetNames[i].remove(name)
-    
-    #Return the list
-    reqs['names'] = sheetNames
+    global g_Graphs,g_numOfEval,g_N
+    g_numOfEval=g_N
+    g_Graphs = graphs.Graphs()
+    g = g_Graphs.getGraphs()
+    reqs['graph1'] = g[0]
+    reqs['graph2'] = g[1]
+    g_numOfEval-=1
     return reqs
 
-def _apply(reqs):
-    '''Get selected sheet names to return a vector list to be plot'''
+def _next_graph(reqs):
+    global g_Graphs,g_historygraph,g_numOfEval
+    if g_numOfEval < 1:
+        reqs['stop'] = True
 
-    data={}
-    values=[]
-    years=[]
-    names=[]
-    # For ervery sheet name selected in the page
-    if 'plots' in reqs:
-        plots=reqs['plots']
-        for key in plots:
-            if plots[key]:
-                #Get the series, years and names of sheets
-                #Appending them into a common vector
-                value,year,name = getData.getTabs(plots[key])
-                values+=value
-                years+=year
-                names+=[name]
-    
-    # To normalize the vector, avoiding bad formations
-    if len(names) > 1:
-        tmp_names=list(itertools.chain.from_iterable(names))
-        names=[]
-        [names.append(item) for item in tmp_names if item not in names]
-        names=[names]
+    names=g_Graphs.getGraphNames()
+    print names
+    if reqs['selected'] == 'graph1':
+        results=[1,-1]
+    else:
+        results=[-1,1]
+    fh=open(g_historygraph,'a+')
+    fh.write('{},{}\n'.format(names[0],results[0]))
+    fh.write('{},{}\n'.format(names[1],results[1]))
+    fh.close()
 
-    # Calls the function responsible to set the series and years into a 
-    # common format to be plot
-    graph = getData.setGraph(values,years)
-
-    #Return the vector with all information, adding the sheet names on the beginning of it
-    reqs['graph']=names+graph
+    g = g_Graphs.getGraphs()
+    reqs['graph1'] = g[0]
+    reqs['graph2'] = g[1]
+    g_numOfEval -= 1
     return reqs
+
 
 if __name__ == '__main__':
     print 'Server running on: 127.0.0.1:8080.'
+
     #The next line opens a page in the default browser 
 #    webbrowser.open("http://127.0.0.1:8080/", new=2)
     app.run()

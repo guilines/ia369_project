@@ -5,7 +5,7 @@ $def with (form, text)
 <html>
 
     <head>
-        <title>T3</title>
+        <title>Projeto</title>
         
         <!-- JQuery Files-->
         <link type="text/css"href="static/widgets/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
@@ -22,10 +22,11 @@ $def with (form, text)
         <script type="text/javascript" src="static/widgets/jqwidgets/jqxloader.js"></script>       
         <script type="text/javascript" src="static/widgets/jqwidgets/jqxnumberinput.js"></script>
         <script type="text/javascript" src="static/widgets/jqwidgets/jqxdatetimeinput.js"></script>
+        <script type="text/javascript" src="static/widgets/jqwidgets/jqxrating.js"></script>
         <script type="text/javascript" src="static/widgets/jqwidgets/globalization/globalize.js"></script>
 
         <!-- Google Charts   -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
 
         <!-- Local Functions   -->
         <script type="text/javascript" src="/static/methods.js"></script>
@@ -34,29 +35,15 @@ $def with (form, text)
     </head>
  
     <body>
-        <h1> Visualizador de Indicadores e Dados Básicos do Brasil </h1>
         <br>
         <div id="desc_div">
+            <h1> Projeto </h1>
             <h2>Unicamp - IA369 W</h1>
-            <h2>Atividade T3 - Visualização Interativa</h1>
+            <!--<h2>Projeto</h1>-->
             <br>
-            <h3>Filipe Reis - RA:091202</h3>
-            <h3>Guilherme Augusto Camara - RA:106694</h3>
-            <br>
-            <br>
-            A ferramenta de visualização proposta tem como objetivo permitir que o usuário navegue
-             por uma série de dados distintos que usualmente não estão facilmente disponíveis em 
-             conjunto. Um exemplo disso é a possibilidade de visualizar dados de evolução do grau 
-             de urbanização em conjunto com dados de mortalidade infantil entre 1990 e 2012, 
-             permitindo que o usuário adquira bastante informação pela fácil exploração dos indicadores.
-            <br>
-            <br>
-            Neste projeto utilizamos o conjunto de dados chamado “Indicadores e dados Básicos  - IDB - 2012”,
-            que reúne informações  demográficas, econômicas e sobre a saúde brasileira entre os anos de 1990 e 2012.
-            <br>
-            <br>
-            Fonte dos dados: http://tabnet.datasus.gov.br/cgi/idb2012/matriz.htm#demog
-            <br>
+                <!--<h3>Filipe Reis         -  RA:091202</h3>-->
+                <!--<h3>Guilherme Camara    -  RA:106694</h3>-->
+                <!--<h3>Gabriel Divino      -  RA:116932</h3>-->
             <br>
             <br>
             <hr>
@@ -64,93 +51,35 @@ $def with (form, text)
         </div>
         <br>
         <div id="start">Start</div>
-        <div id="A_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores demográficos:</h3></td>
-                    <td><div id='A_series'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="B_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores socioeconômicos:</h3></td>
-                    <td><div id='B_series'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="C_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores de mortalidade:</h3></td>
-                    <td><div id='C_series'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="D_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores de morbidade:</h3></td>
-                    <td><div id='D_series'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="E_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores de recurso:</h3></td>
-                    <td><div id='E_series'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="F_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores de cobertura:</h3></td>
-                    <td><div id='F_series'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="G_series_div">
-            <table>
-                <tr>
-                    <td><h3>Indicadores de fatores de risco e proteção:</h3></td>
-                    <td><div id='G_series'></div></td>
-                </tr>
-            </table>
-        </div>
-        <div id="chart_type_div">
-            <hr>
-            <table>
-                <tr>
-                    <td><h3>Tipo do Gráfico:</h3></td>
-                    <td><div id='chart_type'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="apply_div">
-            <table>
-                <tr>
-                    <td><div id='apply'>Montar gráfico</div></td>
-                </tr>
-            </table>
-        </div>
         <div id="result_chart_div">
+            <h2> Qual gráfico você prefere? </h2>
+            <table>
+                <tr>
+                    <td><img id="result_chart1" height="400px" width="600px"></img></td>
+                    <td><img id="result_chart2" height="400px" width="600px"></img></td>
+                </tr>
+                <tr>
+                    <td><div id="eval_1">Gráfico 1</div></td>
+                    <td><div id="eval_2">Gráfico 2</div></td>
+                </tr>
             <hr>
-            <br></br>
-            <h2>Gráfico:</h2>
-            <div id="result_chart"></div>
-            <hr>
+        </div>
+        <div id="evaluate_div">
+            <table>
+                <tr>
+                    <!--<h2>Evaluate:</h2>-->
+                    <td><div id='evaluate'></div></td>
+                </tr>
+            </table>
         </div>
         <br></br>
-        <div id="reset">Editar Gráfico</div>
+        <div id="thanks_div">
+            <h2>Obrigado por participar! :D</h2>
+            <br>
+            <br>
+            <hr>
+            <h3>Aperte Reset para recomeçar</h3>
+        </div>
+        <div id="reset">Reset</div>
     </body>
 </html>
