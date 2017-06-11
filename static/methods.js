@@ -1,3 +1,7 @@
+var ip='';
+var nLeft=0;
+var names=[];
+
 $(document).ready(function() {
     createWidgets();
 	$("#result_chart_div").hide();
@@ -10,13 +14,17 @@ $(document).ready(function() {
     });
 
 	$('#start').on('click', function () {
+	    nLeft = 20;
         var data = {};
         data['operation'] = 'start';
+        data["ip"] = ip;
         jQuery.ajax({   type: "POST",
                         dataType: "json",
                         data: JSON.stringify(data),
                         success: function(data) {
 	                        next_graph(data);
+	                        nLeft-=1;
+	                        names=data.names;
                         },
                     });
     });
@@ -29,6 +37,10 @@ $(document).ready(function() {
         var data = {};
         data['operation'] = 'next_graph';
         data['selected'] = 'graph1'
+        data["ip"] = ip;
+        data["nLeft"] = nLeft;
+        data["graph_names"] = names;
+
         jQuery.ajax({   type: "POST",
                         dataType: "json",
                         data: JSON.stringify(data),
@@ -37,6 +49,8 @@ $(document).ready(function() {
                                 finishTest();
                             } else {
 	                        next_graph(data);
+	                        nLeft-=1;
+	                        names=data.names;
 	                        }
                         },
                     });
@@ -50,6 +64,10 @@ $(document).ready(function() {
         var data = {};
         data['operation'] = 'next_graph';
         data['selected'] = 'graph2'
+        data["ip"] = ip;
+        data["nLeft"] = nLeft;
+        data["graph_names"] = names;
+
         jQuery.ajax({   type: "POST",
                         dataType: "json",
                         data: JSON.stringify(data),
@@ -58,10 +76,17 @@ $(document).ready(function() {
                                 finishTest();
                             } else {
 	                        next_graph(data);
+	                        nLeft-=1;
+	                        names=data.names;
 	                        }
                         },
                     });
     });
+
+    $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
+        ip=data.ip;
+    });
+
 });
 
 function createWidgets() {

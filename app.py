@@ -1,11 +1,10 @@
 import simplejson as json
 import web
 import modules.get_graphs as graphs
+from time import gmtime, strftime
 
 g_Graphs = graphs.Graphs()
 g_historygraph='modules/data/results.csv'
-g_N=15
-g_numOfEval = g_N
 
 urls = ('/', 'messages')
 render = web.template.render('templates/')
@@ -46,35 +45,39 @@ def _reset(reqs):
     return True
 
 def _start(reqs):
-    global g_Graphs,g_numOfEval,g_N
-    g_numOfEval=g_N
+    global g_Graphs
     g_Graphs = graphs.Graphs()
     g = g_Graphs.getGraphs()
     reqs['graph1'] = g[0]
     reqs['graph2'] = g[1]
-    g_numOfEval-=1
+    reqs['names'] = g_Graphs.getGraphNames()
     return reqs
 
 def _next_graph(reqs):
-    global g_Graphs,g_historygraph,g_numOfEval
-    if g_numOfEval < 1:
-        reqs['stop'] = True
+    global g_Graphs,g_historygraph
 
-    names=g_Graphs.getGraphNames()
-    print names
+    names = reqs['graph_names']
+    ip = reqs['ip']
+
     if reqs['selected'] == 'graph1':
         results=[1,-1]
     else:
         results=[-1,1]
+
+    time=strftime("%Y%m%d,%H:%M:%S", gmtime())
     fh=open(g_historygraph,'a+')
-    fh.write('{},{}\n'.format(names[0],results[0]))
-    fh.write('{},{}\n'.format(names[1],results[1]))
+    fh.write('{},{},{},{}\n'.format(time,ip,names[0],results[0]))
+    fh.write('{},{},{},{}\n'.format(time,ip,names[1],results[1]))
     fh.close()
+
+    if reqs['nLeft'] < 1:
+        reqs['stop'] = True
+        return reqs
 
     g = g_Graphs.getGraphs()
     reqs['graph1'] = g[0]
     reqs['graph2'] = g[1]
-    g_numOfEval -= 1
+    reqs['names'] = g_Graphs.getGraphNames()
     return reqs
 
 
