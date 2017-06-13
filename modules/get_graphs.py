@@ -76,6 +76,7 @@ class Graphs:
                 plt.ylim(0,10)
             sio = cStringIO.StringIO()
             plt.savefig(sio, format="PNG")
+            plt.close()
             encoded_img = sio.getvalue().encode('Base64')
             graphs.append('data:image/png;base64,{}'.format(encoded_img))
             graph_name='{},{},{},{}'.format(dataset_name,cmaps[i],markers[i],ss[i])
