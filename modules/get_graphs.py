@@ -7,12 +7,12 @@ import cStringIO
 class Graphs:
     def __init__(self):
         # self.nGraphs=number_of_graphs
-        self.cmaps=['bwr','RdBu','cool','Pastel1','flag']
-        self.ss=[100,250,500,750,1000]
-        self.markers=['o','v','p','^','x','.',',']
+        self.cmaps=['Greys', 'GnBu', 'YlOrRd']
+        self.ss=[100,300,750]
+        self.markers=['o','v','^']
         self.rdn_choices=['cmaps','sizes','markers']
         self.graphs_names = ['','']
-        self.dataset=['linearIncrease','linearDecrease','log','exp','constant']
+        self.dataset=['linearIncrease','linearDecrease','constant']
 
 
     def encodeGraph(self,figure):
