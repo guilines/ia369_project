@@ -30,11 +30,19 @@ The following tools and libraries must be installed to run this application:
 * HTML 5
 
 ### Running
-In a Terminal / Power Shell, inside the cloned repository, execute the following line:
+Download the jqWidgets into a folder. 
 
-$ python app.py
+In a Terminal / Power Shell, inside the cloned repository, execute the following steps:
+* Create a symbolic link to the jqwidgets
+    * $ cd static/
 
-Open your browser at: [127.0.0.1:8080](127.0.0.1:8080)
+    * $ ln -s FOLDER_TO_JQWIDGETS/jqwidgets-4.5.0 widgets
+
+    * $ cd ../
+* Execute the app
+    * $ python app.py
+
+* Open your browser at: [127.0.0.1:8080](127.0.0.1:8080)
 
 
 ## Research Results
