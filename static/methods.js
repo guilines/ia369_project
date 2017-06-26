@@ -30,7 +30,7 @@ $(document).ready(function() {
     });
 
     $('#research').on('click', function () {
-	    window.open("https://ia369-results-fireis.c9users.io/index.html");
+	    window.open("https://ia369-results-fireis.c9users.io/results.html");
     });
 
 
