@@ -46,7 +46,8 @@ In a Terminal / Power Shell, inside the cloned repository, execute the following
 
 
 ## Research Results
-The results and analysis of this research can be viewed in Report.pdf file.
+The results and analysis of this research can be viewed in 
+[Report.pdf](https://github.com/guilines/ia369_project/blob/master/Report.pdf)
 
 Obs: The report is written in Portuguese.
 
