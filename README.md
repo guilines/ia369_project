@@ -46,7 +46,7 @@ In a Terminal / Power Shell, inside the cloned repository, execute the following
 
 
 ## Research Results
-The results and analysis of this research can be viewed in [report.pdf](report.pdf)
+The results and analysis of this research can be viewed in Report.pdf file.
 
 Obs: The results is written in Portuguese.
 
