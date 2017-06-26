@@ -1,0 +1,169 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Human Perception Research</title>
+    <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+  </head>
+  <body>
+    
+    <!-- Start Top Bar -->
+    <!--<div class="top-bar">-->
+      <!--<div class="top-bar-left">-->
+        <!--<ul class="menu">-->
+          <!--<li class="menu-text">Blog</li>-->
+          <!--<li><a href="#">One</a></li>-->
+          <!--<li><a href="#">Two</a></li>-->
+          <!--<li><a href="#">Three</a></li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!-- End Top Bar -->
+
+    <div class="callout large primary">
+      <div class="row column text-center">
+        <h1>Pesquisa sobre Percepção em Visualizações</h1>
+        <h2 class="subheader">Projeto Final de Visualização de Dados</h2>
+      </div>
+    </div>
+    
+    <!-- We can now combine rows and columns when there's only one column in that row -->
+    <div class="row medium-8 large-7 columns">
+      <div class="blog-post">
+        <h3>Sobre</h3>
+        <p>
+          Esse projeto foi desenvolvido para a disciplina de visualização de dados (IA369W),
+          lecionada pela professora Paula Dornhofer Paro Costa para pós-graduação na Faculdade
+          de Engenharia Elétrica (FEEC) da Universidade Estadual de Campinas durante o primeiro semestre de 2017.
+          <br><br>
+          O projeto tem como objetivo conduzir um estudo prático sobre percepção humana aplicada à visualização de
+          dados, possibilitando uma comparação dos resultados com referências estudadas na disciplina.
+          <br><br>
+          Os resultados apresentados são preliminares, visto que uma pesquisa maior e mais controlada seria necessária
+          para resultados definitivos, o que foge do escopo do projeto.
+
+          Este projeto pode ser encontrado no github: <a href="https://github.com/guilines/ia369_project">ia369_project</a>
+          <br><br>
+          <b>Autores</b>:
+          <br>
+          Filipe Antonio de Barros Reis
+          <br>
+          Guilherme Augusto Câmara
+          <br>
+          Gabriel Lisbôa Guimarães Divino
+        </p>
+        <div class="callout">
+        </div>
+      </div>
+
+      <div class="blog-post">
+        <h3>Resultados</h3>
+        <p>
+        De forma a inicializar a análise dos dados, o primeiro passo realizado foi analisar a variação dos parâmetros
+          do gráfico para o conjunto das três distribuições de dados (linear crescente, linear decrescente e constante).
+          <br><br>
+        Com isso, os resultados apresentados a seguir estão separados nas categorias de Formato dos Marcadores,
+          Tamanho dos Marcadores, Mapa de Cores e Conjunto mais Votado, logo abaixo.
+        </p>
+        <br>
+        <h4>Formato dos marcadores</h4>
+        <img class="thumbnail" src="figures/escolhaDosMarcadores.png">
+        <p>
+          <b>Legenda:</b>
+          <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ - Triângulo equilátero apontado para cima
+          <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o - Circunferência
+          <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v - Triângulo equilátero apontado para baixo
+          <br><br>
+
+        Para o gráfico com variação linear crescente, o tipo de marcador no formato 'o' foi
+          o mais escolhido pelos participantes que realizaram nossa pesquisa, com 0.63 pontos.
+          Já no gráfico constante, o triângulo superior foi o marcador preferido, com 0.57 pontos.
+          Uma peculiaridade foi o empate técnico entre os marcadores 'o' e '^' na escolha durante o gráfico
+          linear decrescente, ambos com 0.56. O marcador 'v' foi o menos escolhido dentre os tipos com
+          no máximo 0.40 pontos.
+        </p>
+        <br>
+        <h4>Tamanho dos marcadores</h4>
+        <img class="thumbnail" src="figures/tamanhoDosMarcadores.png">
+        <p>
+          Quanto aos tamanhos, houve praticamente um empate em qual foi o mais popular. Apesar do tamanho 100 ter
+          sido mais escolhido quando houve alguma tendência linear nos dados, com pontuações de 0.70 no decrescente e
+          0.75 no crescente. Contudo, quando essa alteração não foi apresentada, o tamanho 300 foi escolhido com
+          pontuação 0.73. O tamanho 750 foi o pior dos parâmetros, dada a sua baixa pontuação nos três tipos de gráficos.
+        </p>
+        <br>
+        <h4>Colormap dos marcadores</h4>
+        <img class="thumbnail" src="figures/mapaDeCores.png">
+        <p>
+          <b>Legenda:</b>
+          <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>GnBu</i> - Colormap sequencial de Verde para Azul
+          <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Greys</i> - Colormap sequencial de tonalidades de Cinza
+          <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>YlOrRd</i> - Colormap sequencial de Amarelo para Vermelho
+          <br>
+          <br>
+          O gráfico Linear Decrescente, o vitorioso foi o GnBu. Coincidentemente, para o gráfico Linear Crescente,
+          o seu complementar (YlOrRd) apresentou uma maior adoção, enquanto houve uma leve escolha geral à adoção do
+          GnBu como cor padrão pros gráficos. O Greys obtiveram a pior pontuação, obtendo um valor inferior a 0.2 em
+          todos os parâmetros. Desta maneira, foi possível comprovar que, apesar de as cores Verde para Azul terem uma
+          tendência maior de adoção, as cores Amarelo para Vermelho aparentam demonstrar a noção de Crescimento melhor
+          do que as suas complementares.
+        </p>
+        <h4>Conjunto mais votado</h4>
+        <img class="thumbnail" src="figures/crescent_global_scores.png">
+        <img class="thumbnail" src="figures/constant_global_scores.png">
+        <img class="thumbnail" src="figures/decrescent_global_scores.png">
+        <p>
+        Dentre as visualizações mais votadas independentemente de qual parâmetro foi alterado, o gráfico mais escolhido
+          foi o com marcador 'v' de tamanho 100 e colormap GnBu recebeu 0.85 de pontuação para linear decrescente.
+          O conjunto mais votado para os dados linearmente crescentes com 0.83 pontos, foi o gráfico com marcador em
+          'v' de tamanho 750 e colormap YlOrRd. Este gráfico também foi o mais votado para dados constantes com 0.73.
+        </p>
+        <div class="callout">
+        </div>
+      </div>
+
+      <div class="blog-post">
+        <h3>Conclusões</h3>
+        <p>
+         Pelo nosso estudo, os resultados estão de acordo com os guias de boas práticas definidas por Jock D. Mackinlay
+          em "Automating the Design of Graphical Presentations of Relational Information". Os parâmetros votados em geral
+          seguiram as normas observadas por Mckinlay e este fato pode indicar ou que a população pesquisada estava
+          acostumada com este tipo de visualização ou que o guia de boas práticas para visualização de gráficos é
+          realmente efetiva.
+          <br><br>
+          Ademais, o uso de escala de cor para visualização em formato eletrônico foi muito bem avaliada,
+          especialmente em comparação a escalas de cinza e este recurso deveria ser melhor explorado.
+          <br><br>
+          Esperava-se que existisse uma certa dessemelhança entre as visualizações mais votadas em conjunto com os
+          parâmetros mais votados dado dois fatores:
+          <ul>
+            <li> Estrutural: Não foi analisado as opções mostradas mas sim qual parâmetro está sendo variado.
+              Ou seja, o conjunto pode ser votado mas apenas um dos parâmetros mostrados será avaliado e, assim, não
+              valorizará os outros parâmetros da visualização.</li>
+
+            <li> Perceptivo: a percepção do conjunto pode ser diferente da percepção individual. O conjunto pode ser mais
+              votado em detrimento de um dos seus parâmetros.</li>
+          </ul>
+        </p>
+        <div class="callout">
+        </div>
+      </div>
+
+    
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
+
+
+    

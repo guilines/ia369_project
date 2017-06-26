@@ -29,6 +29,11 @@ $(document).ready(function() {
                     });
     });
 
+    $('#research').on('click', function () {
+	    window.open("https://ia369-results-fireis.c9users.io/index.html");
+    });
+
+
     $("#eval_1").on('checked',function () {
         $('#eval_1').jqxRadioButton('disable');
         $("#eval_1").jqxRadioButton('uncheck');
@@ -91,6 +96,12 @@ $(document).ready(function() {
 
 function createWidgets() {
 	$("#start").jqxButton({
+        width: '150',
+        height: '25',
+        theme: 'energyblue'
+    });
+
+    $("#research").jqxButton({
         width: '150',
         height: '25',
         theme: 'energyblue'
